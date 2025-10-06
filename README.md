@@ -20,6 +20,7 @@ To evaluate semantic similarity between original and generated texts.
 
 **Methodology**
 
+
 **Step 1: Installing & Importing Libraries**
 
 Transformers library → provides pre-trained NLP models like T5, BART, PEGASUS.
@@ -28,7 +29,7 @@ SentencePiece → tokenizer tool used with T5 and PEGASUS.
 
 These libraries allow you to load models and generate summaries or paraphrases without training from scratch.
 
-** Step 2: Loading Pre-Trained Models**
+**Step 2: Loading Pre-Trained Models**
 
 T5 (Text-to-Text Transfer Transformer)
 
@@ -49,7 +50,7 @@ Specially trained for summarization tasks.
 Generates human-like summaries because it was pre-trained on "gap sentence prediction".
 
 
-** Step 3: Summarization**
+**Step 3: Summarization**
 
 You give a long passage of text to the model.
 
