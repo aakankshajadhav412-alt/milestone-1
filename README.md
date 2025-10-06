@@ -1,104 +1,126 @@
-1. Setup
+**Introduction**
 
-Install the necessary libraries for NLP:
+Background of text processing.
 
-!pip install transformers sentencepiece --quiet
+Importance of summarization and paraphrasing in research/education.
 
+Motivation for using models like T5, BART, PEGASUS.
 
-Import required classes:
+Problem statement (e.g., “Large texts are difficult to process, so summarization and paraphrasing are needed”).
+**Objectives**
 
-from transformers import T5ForConditionalGeneration, T5Tokenizer
-from transformers import PegasusForConditionalGeneration, PegasusTokenizer
-import textwrap
+To generate concise summaries from long text.
 
+To produce multiple paraphrases of the same sentence.
 
-Models used:
+To compare different NLP models for performance.
 
-T5-base for summarization.
+To evaluate semantic similarity between original and generated texts.
+**Methodology**
+**Step 1: Installing & Importing Libraries**
 
-PEGASUS for paraphrasing.
+Transformers library → provides pre-trained NLP models like T5, BART, PEGASUS.
 
-2. Summarization with T5
+SentencePiece → tokenizer tool used with T5 and PEGASUS.
 
-Purpose: Reduce long technical content into a short, clear summary.
+These libraries allow you to load models and generate summaries or paraphrases without training from scratch.
 
-Function:
+** Step 2: Loading Pre-Trained Models**
 
-def generate_summary(text, min_len=40, max_len=120, beams=4, no_repeat_ngram_size=3, length_penalty=2.0, early_stopping=True):
-    """
-    Generate a concise summary using T5.
-    """
-    input_text = "summarize: " + text.strip().replace("\n", " ")
-    inputs = t5_tokenizer.encode(input_text, return_tensors="pt", max_length=1024, truncation=True)
-    summary_ids = t5_model.generate(
-        inputs,
-        max_length=max_len,
-        min_length=min_len,
-        num_beams=beams,
-        no_repeat_ngram_size=no_repeat_ngram_size,
-        length_penalty=length_penalty,
-        early_stopping=early_stopping
-    )
-    return t5_tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+T5 (Text-to-Text Transfer Transformer)
 
+Converts every NLP problem into a text-to-text format.
 
-Example:
+Example: "summarize: long text" → produces a shorter version.
 
-electrical_text = "A transformer transfers electrical energy between circuits through electromagnetic induction..."
-summary = generate_summary(electrical_text, min_len=30, max_len=80, beams=5)
-print(summary)
+BART
 
+A denoising autoencoder transformer.
 
-Output:
-"Transformers efficiently transfer electrical energy and are essential in power distribution."
+Very good at abstractive summarization.
 
-3. Paraphrasing with PEGASUS
+PEGASUS
 
-Purpose: Generate multiple ways to express the same sentence without changing meaning.
+Specially trained for summarization tasks.
 
-Function:
+Generates human-like summaries because it was pre-trained on "gap sentence prediction".
 
-def generate_paraphrases(text, num_return=5, beams=10, max_len=60, early_stopping=True):
-    """
-    Generate multiple paraphrased sentences using PEGASUS.
-    """
-    inputs = pegasus_tokenizer.encode(text, return_tensors="pt", truncation=True)
-    paraphrase_ids = pegasus_model.generate(
-        inputs,
-        max_length=max_len,
-        num_beams=beams,
-        num_return_sequences=num_return,
-        early_stopping=early_stopping
-    )
-    return pegasus_tokenizer.batch_decode(paraphrase_ids, skip_special_tokens=True)
+** Step 3: Summarization**
 
+You give a long passage of text to the model.
+
+The model generates a short, meaningful version of that passage.
+
+Parameters used:
+
+min_len & max_len → control how short/long the summary is.
+
+beam search (num_beams) → ensures better quality by checking multiple possible summaries.
+
+no_repeat_ngram_size → avoids repeated phrases.
+
+ Example:
+Original text: "A transformer is an electrical device that transfers energy between circuits."
+Summary: "A transformer transfers energy between circuits."
+**
+ Step 4: Paraphrasing**
+
+Models like PEGASUS, T5 (paraphrase model), BART (paraphrase version) are used.
+
+Instead of shortening, they rewrite text in a different way but with the same meaning.
 
 Example:
 
-electrical_sentence = "Electrical energy is transmitted at high voltages to reduce power loss."
-paraphrases = generate_paraphrases(electrical_sentence, num_return=3, beams=8)
-for i, p in enumerate(paraphrases):
-    print(f"{i+1}. {p}")
+Original: "A transformer transfers electrical energy between circuits."
 
+Paraphrase 1: "Electrical energy is passed between circuits by a transformer."
 
-Output:
+Paraphrase 2: "A transformer moves electrical energy from one circuit to another."
 
-"High-voltage transmission reduces power loss in electricity transfer."
+**Step 5: Similarity Checking**
 
-"To minimize energy loss, electricity is sent at high voltages."
+Uses SentenceTransformer (MiniLM) → creates vector embeddings of sentences.
 
-"Electrical energy is transferred at high voltages to prevent power loss."
+Cosine similarity → measures how close two sentences are in meaning.
 
-4. Interactive Playground
+Helps evaluate:
 
-Users can input their own text and instantly get both a summary and paraphrases.
+How close a summary is to the original text.
 
-Example:
+How similar paraphrases are to each other.
 
-your_text = "The synchronous motor operates at constant speed irrespective of the load applied to it."
+Step 6: Visualization
 
-generated_summary = generate_summary(your_text, min_len=25, max_len=70, beams=5)
-generated_paraphrases = generate_paraphrases(your_text, num_return=3, beams=7)
+Summary Lengths (number of words generated).
 
-print("Summary:", generated_summary)
-print("Paraphrases:", generated_paraphrases)
+Similarity Scores (how well the summary matches the original).
+
+Paraphrase Lengths & Similarity (comparison among different models).
+
+Helps in comparing T5 vs BART vs PEGASUS.
+
+**Step 7: Bigram Analysis**
+
+Bigrams = pairs of consecutive words.
+
+Example: in "a transformer transfers electrical energy", the bigrams are:
+
+"a transformer", "transformer transfers", "transfers electrical", "electrical energy".
+
+Useful for analyzing frequent technical phrases in text.
+**
+Conclusion**
+
+Summarization shortens text while keeping the main meaning.
+
+Paraphrasing rewrites text in multiple ways with the same sense.
+
+PEGASUS gives the most accurate and concise summaries.
+
+T5 and BART perform strongly for paraphrasing tasks.
+
+Similarity analysis ensures outputs stay semantically close to the original.
+
+Bigram and visualization methods help in analyzing text structure and performance.
+
+The combined pipeline provides an efficient way for text simplification, rephrasing, and analysis.
