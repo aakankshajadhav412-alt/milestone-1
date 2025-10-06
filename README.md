@@ -16,6 +16,8 @@ To produce multiple paraphrases of the same sentence.
 To compare different NLP models for performance.
 
 To evaluate semantic similarity between original and generated texts.
+
+
 **Methodology**
 **Step 1: Installing & Importing Libraries**
 
