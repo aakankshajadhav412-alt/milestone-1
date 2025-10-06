@@ -19,6 +19,7 @@ To evaluate semantic similarity between original and generated texts.
 
 
 **Methodology**
+
 **Step 1: Installing & Importing Libraries**
 
 Transformers library → provides pre-trained NLP models like T5, BART, PEGASUS.
@@ -47,6 +48,7 @@ Specially trained for summarization tasks.
 
 Generates human-like summaries because it was pre-trained on "gap sentence prediction".
 
+
 ** Step 3: Summarization**
 
 You give a long passage of text to the model.
@@ -64,8 +66,9 @@ no_repeat_ngram_size → avoids repeated phrases.
  Example:
 Original text: "A transformer is an electrical device that transfers energy between circuits."
 Summary: "A transformer transfers energy between circuits."
-**
- Step 4: Paraphrasing**
+
+
+**Step 4: Paraphrasing**
 
 Models like PEGASUS, T5 (paraphrase model), BART (paraphrase version) are used.
 
@@ -79,6 +82,8 @@ Paraphrase 1: "Electrical energy is passed between circuits by a transformer."
 
 Paraphrase 2: "A transformer moves electrical energy from one circuit to another."
 
+
+
 **Step 5: Similarity Checking**
 
 Uses SentenceTransformer (MiniLM) → creates vector embeddings of sentences.
@@ -91,7 +96,8 @@ How close a summary is to the original text.
 
 How similar paraphrases are to each other.
 
-Step 6: Visualization
+
+**Step 6: Visualization**
 
 Summary Lengths (number of words generated).
 
@@ -100,6 +106,7 @@ Similarity Scores (how well the summary matches the original).
 Paraphrase Lengths & Similarity (comparison among different models).
 
 Helps in comparing T5 vs BART vs PEGASUS.
+
 
 **Step 7: Bigram Analysis**
 
@@ -110,8 +117,10 @@ Example: in "a transformer transfers electrical energy", the bigrams are:
 "a transformer", "transformer transfers", "transfers electrical", "electrical energy".
 
 Useful for analyzing frequent technical phrases in text.
-**
-Conclusion**
+
+
+
+**Conclusion**
 
 Summarization shortens text while keeping the main meaning.
 
